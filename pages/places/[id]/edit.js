@@ -1,16 +1,33 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import useSWR from "swr";
 import Form from "../../../components/Form.js";
 import { StyledLink } from "../../../components/StyledLink.js";
+import useSWR from "swr";
+import { useState } from "react";
 
 export default function EditPage() {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
-  const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
+  const { data: place, isLoading, error, mutate } = useSWR(`/api/places/${id}`);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   async function editPlace(place) {
+    console.log(place);
+    const response = await fetch(`/api/places/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(place),
+    });
+    if (response.ok) {
+      mutate();
+      router.push("/");
+      setIsEditMode(false);
+    } else {
+      console.log(`Error : ${response.status}`);
+    }
     console.log("Place edited (but not really...)");
   }
 
@@ -22,7 +39,13 @@ export default function EditPage() {
       <Link href={`/places/${id}`} passHref legacyBehavior>
         <StyledLink justifySelf="start">back</StyledLink>
       </Link>
-      <Form onSubmit={editPlace} formName={'edit-place'} defaultData={place} />
+      <Form
+        isEditMode={isEditMode}
+        setIsEditMode={setIsEditMode}
+        onSubmit={editPlace}
+        formName={"edit-place"}
+        defaultData={place}
+      />
     </>
   );
 }

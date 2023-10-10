@@ -24,7 +24,13 @@ export const Label = styled.label`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit, formName, defaultData }) {
+export default function Form({
+  onSubmit,
+  formName,
+  defaultData,
+  isEditMode,
+  setIsEditMode,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -70,8 +76,8 @@ export default function Form({ onSubmit, formName, defaultData }) {
         rows="10"
         defaultValue={defaultData?.description}
       ></Textarea>
-      <StyledButton type="submit">
-        {defaultData ? "Update place" : "Add place"}
+      <StyledButton type="submit" onClick={() => setIsEditMode(!isEditMode)}>
+        {isEditMode ? "Update place" : "Add place"}
       </StyledButton>
     </FormContainer>
   );
