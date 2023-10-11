@@ -1,6 +1,6 @@
 import Comment from "../../../../db/models/Comment";
 import Place from "../../../../db/models/Place";
-import dbConnect from "../../../../db/connect";
+import dbConnect from "../../../../db/connect.js";
 export default async function handler(request, response) {
   await dbConnect();
   const { id } = request.query;
