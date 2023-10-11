@@ -23,6 +23,13 @@ export default function Comments({
     }
   `;
 
+  const DeleteButton = styled.button`
+    color: red;
+    border: none;
+    background: none;
+    font-size: 20px;
+  `;
+
   return (
     <Article>
       <FormContainer onSubmit={onSubmit}>
@@ -34,7 +41,11 @@ export default function Comments({
       </FormContainer>
       {comments && (
         <>
-          <h1> {comments.length} fans commented on this place:</h1>
+          <h1>
+            {comments.length === 1
+              ? `${comments.length} fan commented on this place:`
+              : `${comments.length} fans commented on this place:`}
+          </h1>
           {comments.map(({ _id, name, comment }) => {
             return (
               <Fragment key={_id}>
@@ -44,9 +55,9 @@ export default function Comments({
                   </small>
                 </p>
                 <span>{comment}</span>
-                <button type="button" onClick={() => onClick(_id)}>
-                  X
-                </button>
+                <DeleteButton type="button" onClick={() => onClick(_id)}>
+                  <strong>X</strong>
+                </DeleteButton>
               </Fragment>
             );
           })}

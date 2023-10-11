@@ -13,7 +13,6 @@ export default function EditPage() {
   const [isEditMode, setIsEditMode] = useState(false);
 
   async function editPlace(place) {
-    console.log(place);
     const response = await fetch(`/api/places/${id}`, {
       method: "PUT",
       headers: {
@@ -40,8 +39,7 @@ export default function EditPage() {
         <StyledLink justifySelf="start">back</StyledLink>
       </Link>
       <Form
-        isEditMode={isEditMode}
-        setIsEditMode={setIsEditMode}
+        isEditMode={setIsEditMode}
         onSubmit={editPlace}
         formName={"edit-place"}
         defaultData={place}

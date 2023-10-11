@@ -24,13 +24,9 @@ export const Label = styled.label`
   font-weight: bold;
 `;
 
-export default function Form({
-  onSubmit,
-  formName,
-  defaultData,
-  isEditMode,
-  setIsEditMode,
-}) {
+export default function Form({ onSubmit, formName, defaultData, isEditMode }) {
+  console.log(defaultData);
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -46,28 +42,28 @@ export default function Form({
         id="name"
         name="name"
         type="text"
-        defaultValue={defaultData?.name}
+        defaultValue={defaultData?.place.name}
       />
       <Label htmlFor="image-url">Image Url</Label>
       <Input
         id="image-url"
         name="image"
         type="text"
-        defaultValue={defaultData?.image}
+        defaultValue={defaultData?.place.image}
       />
       <Label htmlFor="location">Location</Label>
       <Input
         id="location"
         name="location"
         type="text"
-        defaultValue={defaultData?.location}
+        defaultValue={defaultData?.place.location}
       />
       <Label htmlFor="map-url">Map Url</Label>
       <Input
         id="map-url"
         name="mapURL"
         type="text"
-        defaultValue={defaultData?.mapURL}
+        defaultValue={defaultData?.place.mapURL}
       />
       <Label htmlFor="description">Description</Label>
       <Textarea
@@ -75,9 +71,9 @@ export default function Form({
         id="description"
         cols="30"
         rows="10"
-        defaultValue={defaultData?.description}
+        defaultValue={defaultData?.place.description}
       ></Textarea>
-      <StyledButton type="submit" onClick={() => setIsEditMode(!isEditMode)}>
+      <StyledButton type="submit" onClick={() => !isEditMode}>
         {isEditMode ? "Update place" : "Add place"}
       </StyledButton>
     </FormContainer>
