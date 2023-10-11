@@ -36,6 +36,7 @@ export default function Form({
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     onSubmit(data);
+    event.target.reset();
   }
 
   return (

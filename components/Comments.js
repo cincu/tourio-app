@@ -1,8 +1,14 @@
 import styled from "styled-components";
 import { FormContainer, Input, Label } from "./Form";
 import { StyledButton } from "./StyledButton.js";
+import { Fragment } from "react";
 
-export default function Comments({ locationName, comments }) {
+export default function Comments({
+  locationName,
+  comments,
+  onSubmit,
+  onClick,
+}) {
   const Article = styled.article`
     display: flex;
     flex-direction: column;
@@ -17,13 +23,9 @@ export default function Comments({ locationName, comments }) {
     }
   `;
 
-  function handleSubmitComment(e) {
-    e.preventDefault();
-  }
-
   return (
     <Article>
-      <FormContainer onSubmit={handleSubmitComment}>
+      <FormContainer onSubmit={onSubmit}>
         <Label htmlFor="name">Your Name</Label>
         <Input type="text" name="name" placeholder="name" />
         <Label htmlFor="comment">Your Comment</Label>
@@ -33,16 +35,19 @@ export default function Comments({ locationName, comments }) {
       {comments && (
         <>
           <h1> {comments.length} fans commented on this place:</h1>
-          {comments.map(({ name, comment }, idx) => {
+          {comments.map(({ _id, name, comment }) => {
             return (
-              <>
-                <p key={idx}>
+              <Fragment key={_id}>
+                <p>
                   <small>
                     <strong>{name}</strong> commented on {locationName}
                   </small>
                 </p>
                 <span>{comment}</span>
-              </>
+                <button type="button" onClick={() => onClick(_id)}>
+                  X
+                </button>
+              </Fragment>
             );
           })}
         </>
